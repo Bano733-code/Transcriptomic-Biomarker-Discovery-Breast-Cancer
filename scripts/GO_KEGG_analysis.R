@@ -49,7 +49,7 @@ ggsave(
   "results/figures/GO_dotplot.png",
   go_plot,
   width = 10,
-  height = 10,
+  height = 12,
   dpi = 300
 )
 
