@@ -80,6 +80,7 @@ Top biological processes:
 
 ![GO Analysis](results/figures/GO_dotplot.png)
 
+<br>
 
 ### KEGG Pathways
 
