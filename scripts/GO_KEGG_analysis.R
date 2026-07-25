@@ -1,63 +1,94 @@
-library(ggplot2)
-library(enrichplot)
 library(clusterProfiler)
-library(stringr)
+library(enrichplot)
+library(org.Hs.eg.db)
 
 
-# Convert GO result to dataframe
-go_df <- as.data.frame(ego)
+load("results_objects.RData")
 
 
-# Select top 10 significant pathways
-go_df <- go_df[1:10, ]
+sig_genes <- results[
+  results$adj.P.Val <0.05 &
+    abs(results$logFC)>1,
+]
 
 
-# Wrap long pathway names
-go_df$Description <- str_wrap(
-  go_df$Description,
-  width = 45
+genes <- sig_genes$GeneSymbol
+
+
+gene_ids <- bitr(
+  genes,
+  fromType="SYMBOL",
+  toType="ENTREZID",
+  OrgDb=org.Hs.eg.db
 )
 
+ego <- enrichGO(
+  gene=gene_ids$ENTREZID,
+  OrgDb=org.Hs.eg.db,
+  ont="BP",
+  pAdjustMethod="BH"
+)
 
-# Create horizontal barplot
-go_barplot <- ggplot(
-  go_df,
-  aes(
-    x = reorder(Description, -log10(p.adjust)),
-    y = -log10(p.adjust)
-  )
+go_plot <- dotplot(
+  ego,
+  showCategory = 10,
+  font.size = 10
 ) +
-  geom_bar(
-    stat = "identity"
-  ) +
-  coord_flip() +
-  theme_classic() +
-  labs(
-    title = "GO Biological Process Enrichment",
-    x = "",
-    y = "-log10 Adjusted P-value"
-  ) +
+  ggtitle("Gene Ontology Biological Process Enrichment") +
   theme(
     plot.title = element_text(
       size = 14,
       face = "bold"
-    ),
-    axis.text.y = element_text(
-      size = 10
+    )
+  )
+
+go_plot
+
+
+ggsave(
+  "results/figures/GO_dotplot.png",
+  go_plot,
+  width = 10,
+  height = 12,
+  dpi = 300
+)
+
+kegg_result <- enrichKEGG(
+  gene=gene_ids$ENTREZID,
+  organism="hsa"
+)
+
+
+dotplot(kegg_result)
+
+kegg_plot <- dotplot(
+  kegg_result,
+  showCategory = 10,
+  font.size = 10
+) +
+  ggtitle("KEGG Pathway Enrichment Analysis") +
+  theme(
+    plot.title = element_text(
+      size = 14,
+      face = "bold"
     )
   )
 
 
-go_barplot
+kegg_plot
 
 
 ggsave(
-  "results/figures/GO_barplot.png",
-  go_barplot,
+  "results/figures/KEGG_dotplot.png",
+  kegg_plot,
   width = 10,
   height = 7,
   dpi = 300
 )
+
+
+save(ego,kegg_result,
+     file="GO_KEGG_results.RData")
 
 kegg_result <- enrichKEGG(
   gene=gene_ids$ENTREZID,
