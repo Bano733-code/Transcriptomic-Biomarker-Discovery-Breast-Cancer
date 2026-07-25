@@ -22,8 +22,6 @@ gene_ids <- bitr(
   OrgDb=org.Hs.eg.db
 )
 
-
-
 ego <- enrichGO(
   gene=gene_ids$ENTREZID,
   OrgDb=org.Hs.eg.db,
@@ -31,16 +29,29 @@ ego <- enrichGO(
   pAdjustMethod="BH"
 )
 
+go_plot <- dotplot(
+  ego,
+  showCategory = 10,
+  font.size = 12
+) +
+  ggtitle("Gene Ontology Biological Process Enrichment") +
+  theme(
+    plot.title = element_text(
+      size = 14,
+      face = "bold"
+    )
+  )
 
-
-dotplot(ego)
+go_plot
 
 
 ggsave(
-  "results/figures/GO_dotplot.png"
+  "results/figures/GO_dotplot.png",
+  go_plot,
+  width = 10,
+  height = 7,
+  dpi = 300
 )
-
-
 
 kegg_result <- enrichKEGG(
   gene=gene_ids$ENTREZID,
@@ -50,9 +61,29 @@ kegg_result <- enrichKEGG(
 
 dotplot(kegg_result)
 
+kegg_plot <- dotplot(
+  kegg_result,
+  showCategory = 10,
+  font.size = 12
+) +
+  ggtitle("KEGG Pathway Enrichment Analysis") +
+  theme(
+    plot.title = element_text(
+      size = 14,
+      face = "bold"
+    )
+  )
+
+
+kegg_plot
+
 
 ggsave(
-  "results/figures/KEGG_dotplot.png"
+  "results/figures/KEGG_dotplot.png",
+  kegg_plot,
+  width = 10,
+  height = 7,
+  dpi = 300
 )
 
 
