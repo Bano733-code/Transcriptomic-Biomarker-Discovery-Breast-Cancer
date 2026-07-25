@@ -78,9 +78,10 @@ Top biological processes:
 * Cell-matrix adhesion
 * PI3K-AKT signaling regulation
 
-![GO Analysis](results/figures/GO_dotplot.png)
+<p align="center">
+<img src="results/figures/GO_dotplot.png" width="700">
+</p>
 
-<br>
 
 ### KEGG Pathways
 
