@@ -1,55 +1,61 @@
-library(clusterProfiler)
+library(ggplot2)
 library(enrichplot)
-library(org.Hs.eg.db)
+library(clusterProfiler)
+library(stringr)
 
 
-load("results_objects.RData")
+# Convert GO result to dataframe
+go_df <- as.data.frame(ego)
 
 
-sig_genes <- results[
-  results$adj.P.Val <0.05 &
-    abs(results$logFC)>1,
-]
+# Select top 10 significant pathways
+go_df <- go_df[1:10, ]
 
 
-genes <- sig_genes$GeneSymbol
-
-
-gene_ids <- bitr(
-  genes,
-  fromType="SYMBOL",
-  toType="ENTREZID",
-  OrgDb=org.Hs.eg.db
+# Wrap long pathway names
+go_df$Description <- str_wrap(
+  go_df$Description,
+  width = 45
 )
 
-ego <- enrichGO(
-  gene=gene_ids$ENTREZID,
-  OrgDb=org.Hs.eg.db,
-  ont="BP",
-  pAdjustMethod="BH"
-)
 
-go_plot <- dotplot(
-  ego,
-  showCategory = 10,
-  font.size = 10
+# Create horizontal barplot
+go_barplot <- ggplot(
+  go_df,
+  aes(
+    x = reorder(Description, -log10(p.adjust)),
+    y = -log10(p.adjust)
+  )
 ) +
-  ggtitle("Gene Ontology Biological Process Enrichment") +
+  geom_bar(
+    stat = "identity"
+  ) +
+  coord_flip() +
+  theme_classic() +
+  labs(
+    title = "GO Biological Process Enrichment",
+    x = "",
+    y = "-log10 Adjusted P-value"
+  ) +
   theme(
     plot.title = element_text(
       size = 14,
       face = "bold"
+    ),
+    axis.text.y = element_text(
+      size = 10
     )
   )
 
-go_plot
+
+go_barplot
 
 
 ggsave(
-  "results/figures/GO_dotplot.png",
-  go_plot,
+  "results/figures/GO_barplot.png",
+  go_barplot,
   width = 10,
-  height = 12,
+  height = 7,
   dpi = 300
 )
 
