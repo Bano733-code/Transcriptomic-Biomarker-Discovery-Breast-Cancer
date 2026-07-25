@@ -64,7 +64,7 @@ Results:
 | Downregulated |  2970 |
 
 <p align="center">
-<img src="results/figures/Volcano_plot.png" width="700">
+<img src="results/figures/Volcano_Plot.png" width="700">
 </p>
 ---
 
