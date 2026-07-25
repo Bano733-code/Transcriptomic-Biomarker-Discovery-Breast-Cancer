@@ -32,7 +32,7 @@ ego <- enrichGO(
 go_plot <- dotplot(
   ego,
   showCategory = 10,
-  font.size = 12
+  font.size = 10
 ) +
   ggtitle("Gene Ontology Biological Process Enrichment") +
   theme(
@@ -64,7 +64,7 @@ dotplot(kegg_result)
 kegg_plot <- dotplot(
   kegg_result,
   showCategory = 10,
-  font.size = 12
+  font.size = 10
 ) +
   ggtitle("KEGG Pathway Enrichment Analysis") +
   theme(
