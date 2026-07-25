@@ -63,8 +63,9 @@ Results:
 | Upregulated   |  2731 |
 | Downregulated |  2970 |
 
-![Volcano Plot](results/figures/Volcano_Plot.png)
-
+<p align="center">
+<img src="results/figures/Volcano_plot.png" width="700">
+</p>
 ---
 
 ## Functional Enrichment
@@ -94,8 +95,9 @@ Top pathways:
 
 ---
 
-![KEGG Analysis](results/figures/KEGG_dotplot.png)
-
+<p align="center">
+<img src="results/figures/KEGG_dotplot.png" width="700">
+</p>
 
 ## Biomarker Identification
 
@@ -115,7 +117,11 @@ Final biomarkers:
 | GATA3 |      4 |    2.80e-03 |
 | SOX4  |      2 |    5.14e-03 |
 
-![Biomarker Expression](results/figures/Biomarker_Boxplot.png)
+
+<p align="center">
+<img src="results/figures/Biomarkers_Boxplot.png" width="700">
+</p>
+
 
 ---
 
