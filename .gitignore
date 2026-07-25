@@ -1,0 +1,36 @@
+# R session files
+.Rhistory
+.RData
+.Ruserdata
+
+# RStudio files
+.Rproj.user/
+*.Rproj
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Large datasets
+*.CEL
+*.fastq
+*.fq
+*.gz
+
+# Downloaded GEO data
+data/
+
+# Cache files
+*.cache
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Python files (future use)
+__pycache__/
+*.pyc
+
+# Environment files
+.env
