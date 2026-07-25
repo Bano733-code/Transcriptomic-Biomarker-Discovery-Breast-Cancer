@@ -32,7 +32,7 @@ ego <- enrichGO(
 go_plot <- dotplot(
   ego,
   showCategory = 10,
-  font.size = 10
+  font.size = 12
 ) +
   ggtitle("Gene Ontology Biological Process Enrichment") +
   theme(
